@@ -1,0 +1,35 @@
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet"  href="{%  static  'css/task.css'  %}">
+    <script src="{% static 'script/task.js' %}"></script>
+    <title>Todo-Home</title>
+</head>
+
+
+<div class="center-column">
+
+	<form method="POST" action="/">
+		{% csrf_token %}
+		{{form.title}}
+		<input class="btn btn-info" type="submit" name="Create Task">
+	</form>
+
+	<div class="todo-list">
+
+	{% for task in tasks %}
+		<div class="item-row">
+            {% if task.complete == True %}
+			<strike>{{task}}</strike>
+			{% else %}
+			<span>{{task}}</span>
+			{% endif %}
+        
+			<a class="right btn btn-sm btn-info" href="{% url 'update_task' task.id %}">Update</a>
+			<a class="right btn btn-sm btn-warning" href="{% url 'delete' task.id %}">Delete</a>
+
+		</div>
+	{% endfor %}
+	</div>
+</div>
